@@ -1,0 +1,17 @@
+{
+    "contents" : "#This code is not finalized and is still being modified while finalizing analysis\n#Please contact me at jpcsoup@gmail.com if you intend to use this code outside personal or academic use\n\n#Large portions of the clustering method were taken from http://www.mattpeeples.net/kmeans.html\n\n# Calculate the mean and standard deviation of difference between SSE of actual data and SSE of 250 randomized datasets\nr.sse <- matrix(0,dim(rand.mat)[1],dim(rand.mat)[2])\nwss.1 <- as.matrix(wss)\nfor (i in 1:dim(r.sse)[2]) {\n  r.temp <- abs(rand.mat[,i]-wss.1[,1])\n  r.sse[,i] <- r.temp}\nr.sse.m <- apply(r.sse,1,mean)\nr.sse.sd <- apply(r.sse,1,sd)\nr.sse.plus <- r.sse.m + r.sse.sd\nr.sse.min <- r.sse.m - r.sse.sd\n\nxrange <- range(1:15)\nyrange <- range(log(r.sse.plus),log(r.sse.min))\nplot(xrange,yrange, type='n',xlab='Cluster Solution', ylab='Log of SSE - Random SSE', main='Cluster Solustions against (Log of SSE - Random SSE)')\nlines(log(r.sse.m), type=\"b\", col='blue')\nlines(log(r.sse.plus), type='l', col='red')\nlines(log(r.sse.min), type='l', col='red')\nlegend('bottomright',c('SSE - random SSE', 'SD of SSE-random SSE'), col=c('blue', 'red'), lty=1)\n\nxrange <- range(1:15)\nyrange <- range(r.sse.plus,r.sse.min)\nplot(xrange,yrange, type='n',xlab='Cluster Solution', ylab='SSE - Random SSE', main='Cluster Solutions against (SSE - Random SSE)')\nlines(r.sse.m, type=\"b\", col='blue')\nlines(r.sse.plus, type='l', col='red')\nlines(r.sse.min, type='l', col='red')\nlegend('bottomright',c('SSE - random SSE', 'SD of SSE-random SSE'), col=c('blue', 'red'), lty=1)\n\nlibrary(reshape)\nlibrary(ggplot2)\n# dfplotck<-rbind(melt(table1,id.vars=c(\"Group.1\")),melt(table2,id.vars=c(\"Group.1\")),\n#           melt(table3,id.vars=c(\"Group.1\")),melt(table4,id.vars=c(\"Group.1\")), deparse.level=2)\n# dfplotck$table<-NA\n# dfplotck$table[1:152]<- \"table1\"\n# dfplotck$table[153:224]<- \"table2\"\n# dfplotck$table[225:376]<- \"table3\"\n# dfplotck$table[377:448]<- \"table4\"\n\ndfplotck <- melt(table2,id.vars=c(\"Group.1\"))\nggplot(dfplotck, aes(x=variable, y=value, color=as.factor(Group.1))) + \n  geom_point(size=4) + theme_bw() +\n  theme( # remove the horizontal grid lines\n    panel.grid.major.y = element_blank() ,\n    # explicitly set the vertical lines (or they will disappear too)\n    panel.grid.major.x = element_line( size=1, color=\"honeydew3\")) + \n  #scale_colour_brewer(palette=\"PuOr\") +\n  labs(title=\"K-Means Cluster Values\\nTransformation 2\", color = \"Cluster\") +\n  facet_grid(.~Group.1)\n\n\n\n",
+    "created" : 1420758161911.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1451324933",
+    "id" : "DE0C5F32",
+    "lastKnownWriteTime" : 1424636644,
+    "path" : "~/Desktop/Columbia/Fall/2-Data Analysis/Independent Project/Graph.R",
+    "project_path" : "Graph.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "source_on_save" : false,
+    "type" : "r_source"
+}
