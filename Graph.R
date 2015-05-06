@@ -47,7 +47,7 @@ ggplot(dfplotck, aes(x=variable, y=value, color=as.factor(Group.1))) +
     panel.grid.major.y = element_blank() ,
     # explicitly set the vertical lines (or they will disappear too)
     panel.grid.major.x = element_line( size=1, color="honeydew3")) + 
-  #scale_colour_brewer(palette="PuOr") +
+  scale_colour_brewer(palette="PuOr") +
   labs(title="K-Means Cluster Values\nTransformation 2", color = "Cluster") +
   facet_grid(.~Group.1)
 
